@@ -1,7 +1,7 @@
 import React from 'react';
 import VinylForm from './VinylForm';
 
-export default AddBook() {
+export default function AddVinyl() {
   const handleOnSubmit = (vinyl) => {
     console.log(vinyl);
   };
