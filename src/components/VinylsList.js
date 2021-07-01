@@ -3,7 +3,11 @@ import axios from 'axios';
 
 export default function VinylsList() {
   useEffect(() => {
-    axios.get(`https://api.discogs.com/database/search?q=Nirvana&token=WppZaBSUhugJNmSVcJQkxmUotfLfyeufVljGcpJv`)
+    axios.get("https://api.discogs.com/users/.Apres/collection", {
+      headers: {
+        "Authorization": "Discogs token=sAhKoWnryWGckfYwFIoercYLLrOJHKWBmQUqxhFZ"
+      }
+    })
       .then(res =>{
         const data = res.data;
         console.log(data);
