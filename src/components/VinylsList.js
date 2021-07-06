@@ -1,20 +1,14 @@
 import React, { useEffect } from 'react';
 import axios from 'axios';
 
-export default function VinylsList() {
-  useEffect(() => {
-    axios.get("https://api.discogs.com/users/.Apres/collection", {
-      headers: {
-        "Authorization": "Discogs token=sAhKoWnryWGckfYwFIoercYLLrOJHKWBmQUqxhFZ"
-      }
-    })
-      .then(res =>{
-        const data = res.data;
-        console.log(data);
-      })
-      .catch(err => console.log(err));
-  });
+export default function VinylsList(props) {
+  const vinyls = props.vinyls;
+  console.log(vinyls);
   return (
-    <h2>List of vinyls</h2>
+    <>
+    {vinyls.map(vinyl => (
+      <h2></h2>
+    ))}
+    </>
   );
 };
