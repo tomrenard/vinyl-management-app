@@ -45,7 +45,7 @@ export default function Deck({ vinyls, isBusy }) {
   })
   // Now we're just mapping the animated values to our view, that's it. Btw, this component only renders once. :-)
   if (img_url.length != 50) { return (
-    <h2>non</h2>)
+    <h2>Loading</h2>)
   }
   else { return props.map(({ x, y, rot, scale }, i) => (
     <animated.div className="parentCard" key={i} style={{ transform: interpolate([x, y], (x, y) => `translate3d(${x}px,${y}px,0)`) }}>
