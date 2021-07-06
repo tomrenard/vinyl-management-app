@@ -31,7 +31,9 @@ export default function AppRouter() {
               <VinylsList {...props} isBusy={isBusy} vinyls={appState} setVinyls={setAppState} /> )} path="/" exact={true}
             />
             <Route component={AddVinyl} path="/add" />
-            <Route component={Deck} path="/deck" />
+            <Route render={(props) => (
+              <Deck {...props} isBusy={isBusy} vinyls={appState} setVinyls={setAppState} /> )} path="/deck" exact={true}
+            />
           </Switch>
         </div>
       </div>
