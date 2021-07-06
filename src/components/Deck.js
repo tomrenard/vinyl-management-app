@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useSprings, animated, interpolate } from 'react-spring'
 import { useDrag } from 'react-use-gesture'
 import '../styles.css';
@@ -13,15 +13,21 @@ const cards = [
 ]
 
 // These two are just helpers, they curate spring data, values that are later being interpolated into css
-const to = i => ({ x: 0, y: i * -4, scale: 1, rot: -10 + Math.random() * 20, delay: i * 100 })
+const to = i => ({ x: 0, y: i * -2, scale: 1, rot: -10 + Math.random() * 20, delay: i * 100 })
 const from = i => ({ x: 0, rot: 0, scale: 1.5, y: -1000 })
 // This is being used down there in the view, it interpolates rotation and scale into a css transform
 const trans = (r, s) => `perspective(1500px) rotateX(30deg) rotateY(${r / 10}deg) rotateZ(${r}deg) scale(${s})`
 
-export default function Deck({ vinyls }) {
+export default function Deck({ vinyls, isBusy }) {
+  let img_url = [];
   const [isReady, setIsReady] = useState(false);
+  const [data, setData] = useState(vinyls);
+  function FetchImg() { vinyls && vinyls.vinyls.forEach(vinyl => (
+    img_url.push(vinyl.basic_information.huge_thumb)
+  ))}
+  FetchImg();
   const [gone] = useState(() => new Set()) // The set flags all the cards that are flicked out
-  const [props, set] = useSprings(cards.length, i => ({ ...to(i), from: from(i) })) // Create a bunch of springs using the helpers above
+  const [props, set] = useSprings(img_url.length, i => ({ ...to(i), from: from(i) })) // Create a bunch of springs using the helpers above
   // Create a gesture, we're interested in down-state, delta (current-pos - click-pos), direction and velocity
   const bind = useDrag(({ args: [index], down, delta: [xDelta], distance, direction: [xDir], velocity }) => {
     const trigger = velocity > 0.03 // If you flick hard enough it should trigger the card to fly out
@@ -35,18 +41,17 @@ export default function Deck({ vinyls }) {
       const scale = down ? 1.1 : 1 // Active cards lift up a bit
       return { x, rot, scale, delay: undefined, config: { friction: 50, tension: down ? 800 : isGone ? 200 : 500 } }
     })
-    if (!down && gone.size === cards.length) setTimeout(() => gone.clear() || set(i => to(i)), 600)
+    if (!down && gone.size === img_url.length) setTimeout(() => gone.clear() || set(i => to(i)), 600)
   })
   // Now we're just mapping the animated values to our view, that's it. Btw, this component only renders once. :-)
-  let img_url = [];
-  vinyls && vinyls.vinyls.forEach(vinyl => (
-    img_url.push(vinyl.basic_information.huge_thumb)
-  ))
-  console.log(img_url[2]);
-  return props.map(({ x, y, rot, scale }, i) => (
+  if (img_url.length != 50) { return (
+    <h2>non</h2>)
+  }
+  else { return props.map(({ x, y, rot, scale }, i) => (
     <animated.div className="parentCard" key={i} style={{ transform: interpolate([x, y], (x, y) => `translate3d(${x}px,${y}px,0)`) }}>
       {/* This is the card itself, we're binding our gesture to it (and inject its index so we know which is which) */}
-      <animated.div className="childCard" {...bind(i)} style={{ transform: interpolate([rot, scale], trans), backgroundImage: `url('https://img.discogs.com/Qv1crYATUSS_jvl6LZY2maOtVOI=/fit-in/350x350/filters:strip_icc():format(jpeg):mode_rgb():quality(40)/discogs-images/R-148240-1448170391-2945.png.jpg')` }} />
+      <animated.div className="childCard" {...bind(i)} style={{ transform: interpolate([rot, scale], trans), backgroundImage: `url("${img_url[i]}")` }} />
     </animated.div>
   ))
+  }
 }

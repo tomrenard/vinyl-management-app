@@ -9,8 +9,8 @@ export default function AppRouter() {
   const [appState, setAppState] = useState();
   const [isBusy, setBusy] = useState(true);
   useEffect(() => {
-    async function FetchData() {
-      fetch("https://api.discogs.com/users/.Apres/collection", {
+     async function FetchData() {
+      await fetch("https://api.discogs.com/users/.Apres/collection", {
         headers: { "Authorization": "Discogs token=sAhKoWnryWGckfYwFIoercYLLrOJHKWBmQUqxhFZ" }
       })
       .then((res) => res.json())
@@ -28,11 +28,11 @@ export default function AppRouter() {
         <div className="main-content">
           <Switch>
             <Route render={(props) => (
-              <VinylsList {...props} isBusy={isBusy} vinyls={appState} setVinyls={setAppState} /> )} path="/" exact={true}
+              <VinylsList {...props} isBusy={isBusy} vinyls={appState} setVinyls={setAppState} /> )} path="/list" exact={true}
             />
             <Route component={AddVinyl} path="/add" />
             <Route render={(props) => (
-              <Deck {...props} isBusy={isBusy} vinyls={appState} setVinyls={setAppState} /> )} path="/deck" exact={true}
+              <Deck {...props} isBusy={isBusy} vinyls={appState} setVinyls={setAppState} /> )} path="/" exact={true}
             />
           </Switch>
         </div>
