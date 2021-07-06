@@ -4,23 +4,23 @@ import Header from '../components/Header';
 import AddVinyl from '../components/AddVinyl';
 import VinylsList from '../components/VinylsList';
 import Deck from '../components/Deck';
-import axios from 'axios';
-
-
 
 export default function AppRouter() {
-  const [appState, setAppState] = useState({
-    vinyls: null,
-  });
+  const [appState, setAppState] = useState();
+  const [isBusy, setBusy] = useState(true);
   useEffect(() => {
-    fetch("https://api.discogs.com/users/.Apres/collection", {
-    headers: { "Authorization": "Discogs token=sAhKoWnryWGckfYwFIoercYLLrOJHKWBmQUqxhFZ" }
-  })
+    async function FetchData() {
+      fetch("https://api.discogs.com/users/.Apres/collection", {
+        headers: { "Authorization": "Discogs token=sAhKoWnryWGckfYwFIoercYLLrOJHKWBmQUqxhFZ" }
+      })
       .then((res) => res.json())
       .then((vinyls) => {
+        setBusy(false);
         setAppState({ vinyls: vinyls.releases });
       });
-  }, [setAppState]);
+    }
+    FetchData();
+    }, []);
   return (
     <BrowserRouter>
       <div>
@@ -28,7 +28,7 @@ export default function AppRouter() {
         <div className="main-content">
           <Switch>
             <Route render={(props) => (
-              <VinylsList {...props} vinyls={appState} setVinyls={setAppState} /> )} path="/" exact={true}
+              <VinylsList {...props} isBusy={isBusy} vinyls={appState} setVinyls={setAppState} /> )} path="/" exact={true}
             />
             <Route component={AddVinyl} path="/add" />
             <Route component={Deck} path="/deck" />

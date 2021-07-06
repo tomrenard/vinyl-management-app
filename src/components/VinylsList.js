@@ -1,13 +1,13 @@
-import React, { useEffect } from 'react';
-import axios from 'axios';
+import React from 'react';
 
 export default function VinylsList(props) {
   const vinyls = props.vinyls;
-  console.log(vinyls);
+  const isBusy = props.isBusy;
+  vinyls && console.log(vinyls);
   return (
     <>
-    {vinyls.map(vinyl => (
-      <h2></h2>
+    { !isBusy && vinyls && vinyls.map(vinyl => (
+      <h2>{vinyl.basic.basic_information.artists_sort}</h2>
     ))}
     </>
   );
