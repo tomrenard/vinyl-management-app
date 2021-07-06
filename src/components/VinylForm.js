@@ -7,18 +7,16 @@ export default function VinyForm(props) {
     title: props.vinyl ? props.vinyl.title : '',
     artist: props.vinyl ? props.vinyl.artist : '',
     genre: props.vinyl ? props.vinyl.genre : '',
-    price: props.vinyl ? props.vinyl.price : '',
     released: props.vinyl ? props.vinyl.released : '',
     label: props.vinyl ? props.vinyl.label : '',
-    format: props.vinyl ? props.vinyl.format : '',
   });
 
   const [errorMsg, setErrorMsg] = useState('');
-  const { title, artist, genre, price, released, label, format } = vinyl;
+  const { title, artist, genre, released, label } = vinyl;
 
   const handleOnSubmit = (event) => {
     event.preventDefault();
-    const values = [title, artist, genre, price, released, label, format];
+    const values = [title, artist, genre, released, label];
     let errorMsg = '';
 
     const allFieldsFilled = values.every((field) => {
@@ -32,10 +30,8 @@ export default function VinyForm(props) {
         title,
         artist,
         genre,
-        price,
         released,
         label,
-        format,
         date: new Date()
       };
       props.handleOnSubmit(vinyl);
@@ -90,18 +86,7 @@ export default function VinyForm(props) {
             onChange={handleInputChange}
           />
         </Form.Group>
-        <Form.Group controlId="price">
-          <Form.Label>Vinyl Price</Form.Label>
-          <Form.Control
-            className="input-control"
-            type="text"
-            name="price"
-            value={price}
-            placeholder="Enter price of vinyl"
-            onChange={handleInputChange}
-          />
-        </Form.Group>
-        <Form.Group controlId="price">
+        <Form.Group controlId="date">
           <Form.Label>Vinyl Release Date</Form.Label>
           <Form.Control
             className="input-control"
@@ -109,28 +94,6 @@ export default function VinyForm(props) {
             name="released"
             value={released}
             placeholder="Enter Release Date"
-            onChange={handleInputChange}
-          />
-        </Form.Group>
-        <Form.Group controlId="price">
-          <Form.Label>Vinyl Label</Form.Label>
-          <Form.Control
-            className="input-control"
-            type="text"
-            name="label"
-            value={label}
-            placeholder="Enter label of vinyl"
-            onChange={handleInputChange}
-          />
-        </Form.Group>
-        <Form.Group controlId="price">
-          <Form.Label>Vinyl Format</Form.Label>
-          <Form.Control
-            className="input-control"
-            type="text"
-            name="format"
-            value={format}
-            placeholder="Enter format of vinyl"
             onChange={handleInputChange}
           />
         </Form.Group>
