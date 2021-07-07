@@ -1,23 +1,69 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { v4 as uuidv4 } from 'uuid';
-import useLocalStorage from '../hooks/useLocalStorage';
 
 
 export default function VinyForm(props) {
-  const [vinyls, setVinyls] = useLocalStorage('vinyls', []);
-  console.log(vinyls);
+  const [vinyl, setVinyl] = useState({
+    title: props.vinyl ? props.vinyl.bookname : '',
+    artist: props.vinyl ? props.vinyl.author : '',
+    year: props.vinyl ? props.vinyl.year : '',
+    genre: props.vinyl ? props.vinyl.genre : '',
+    label: props.vinyl ? props.vinyl.label : '',
+    cover: props.vinyl ? props.vinyl.cover : '',
+  });
+
+  const [errorMsg, setErrorMsg] = useState('');
+  const { title, artist, year, genre, label, cover } = vinyl;
+
+  const handleOnSubmit = (event) => {
+    event.preventDefault();
+    const values = [title, artist, year, genre, label, cover];
+    let errorMsg = '';
+
+    const allFieldsFilled = values.every((field) => {
+      const value = `${field}`.trim();
+      return value !== '' && value !== '0';
+    });
+
+    if (allFieldsFilled) {
+      const vinyl = {
+        id: uuidv4(),
+        title,
+        artist,
+        year,
+        genre,
+        label,
+        cover,
+        date: new Date()
+      };
+      props.handleOnSubmit(vinyl);
+    } else {
+      errorMsg = 'Please fill out all the fields.';
+    }
+    setErrorMsg(errorMsg);
+  };
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setVinyl((prevState) => ({
+      ...prevState,
+      [name]: value
+      }));
+  };
   return (
     <div className="main-form">
-      <Form>
+      {errorMsg && <p className="errorMsg">{errorMsg}</p>}
+      <Form onSubmit={handleOnSubmit}>
         <Form.Group controlId="title">
           <Form.Label>Vinyl Title</Form.Label>
           <Form.Control
             className="input-control"
             type="text"
             name="title"
-            value=''
+            value={title}
             placeholder="Enter title of vinyl"
+            onChange={handleInputChange}
           />
         </Form.Group>
         <Form.Group controlId="artist">
@@ -26,8 +72,9 @@ export default function VinyForm(props) {
             className="input-control"
             type="text"
             name="artist"
-            value=''
+            value={artist}
             placeholder="Enter artist of vinyl"
+            onChange={handleInputChange}
           />
         </Form.Group>
          <Form.Group controlId="date">
@@ -36,8 +83,9 @@ export default function VinyForm(props) {
             className="input-control"
             type="text"
             name="year"
-            value=''
+            value={year}
             placeholder="Enter Release Year"
+            onChange={handleInputChange}
           />
         </Form.Group>
         <Form.Group controlId="genre">
@@ -46,8 +94,9 @@ export default function VinyForm(props) {
             className="input-control"
             type="text"
             name="genre"
-            value=''
+            value={genre}
             placeholder="Enter genre"
+            onChange={handleInputChange}
           />
         </Form.Group>
         <Form.Group controlId="label">
@@ -56,18 +105,20 @@ export default function VinyForm(props) {
             className="input-control"
             type="text"
             name="label"
-            value=''
+            value={label}
             placeholder="Enter label"
+            onChange={handleInputChange}
           />
         </Form.Group>
-        <Form.Group controlId="genre">
+        <Form.Group controlId="cover">
           <Form.Label>Cover</Form.Label>
           <Form.Control
             className="input-control"
-            type="file"
+            type="text"
             name="cover"
-            value=''
-            placeholder="Add Cover"
+            value={cover}
+            placeholder="Upload Cover Link (find on Discogs)"
+            onChange={handleInputChange}
           />
         </Form.Group>
         <Button variant="primary" type="submit" className="submit-btn">
