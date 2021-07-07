@@ -10,15 +10,16 @@ import useLocalStorage from '../hooks/useLocalStorage';
 
 export default function AppRouter() {
   const [vinyls, setVinyls] = useLocalStorage('vinyls', []);
+  const [vinylsDiscogs, setVinylsDiscogs] = useLocalStorage('vinyls', []);
   useEffect(() => {
      async function FetchData() {
       const res = await fetch("https://api.discogs.com/users/.Apres/collection", {
         headers: { "Authorization": "Discogs token=sAhKoWnryWGckfYwFIoercYLLrOJHKWBmQUqxhFZ" }
       });
       const data = await res.json();
-      const vinyls = data.releases;
+      const vinylsDiscogs = data.releases;
       let vinylsArray = [];
-      vinyls.forEach(vinyl => {
+      vinylsDiscogs.forEach(vinyl => {
         vinyl = {
           id: uuidv4(),
           title: vinyl.basic_information.title,
@@ -31,7 +32,7 @@ export default function AppRouter() {
         };
         vinylsArray.push(vinyl);
       });
-      setVinyls(vinylsArray);
+      setVinylsDiscogs(vinylsArray);
     };
     FetchData();
     }, []);
@@ -42,10 +43,7 @@ export default function AppRouter() {
         <div className="main-content">
           <Switch>
               <Route render={(props) => (
-                <VinylsList {...props} vinyls={vinyls} setVinyls={setVinyls} /> )} path="/list"
-              />
-              <Route render={(props) => (
-                <AddVinyl {...props} vinyls={vinyls} setVinyls={setVinyls} /> )} path="/add"
+                <AddVinyl {...props} vinyls={vinyls} setVinyls={setVinyls} vinylsDiscogs={vinylsDiscogs} setVinylsDiscogs={setVinylsDiscogs} /> )} path="/add"
               />
               <Route render={(props) => (
                 <Deck {...props} vinyls={vinyls} setVinyls={setVinyls} /> )} path="/" exact={true}

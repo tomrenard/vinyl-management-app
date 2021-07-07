@@ -1,7 +1,7 @@
 import React from 'react';
 import VinylForm from './VinylForm';
 
-const AddVinyl = ({ history, vinyls, setVinyls }) => {
+const AddVinyl = ({ history, vinyls, setVinyls, vinylsDiscogs, setVinylsDiscogs }) => {
   const handleOnSubmit = (vinyl) => {
     setVinyls([...vinyls, vinyl]);
     history.push('/');
