@@ -1,14 +1,17 @@
 import React from 'react';
 import VinylForm from './VinylForm';
 
-export default function AddVinyl() {
+const AddVinyl = ({ history, vinyls, setVinyls }) => {
   const handleOnSubmit = (vinyl) => {
-    console.log(vinyl);
+    setVinyls([vinyl, ...vinyls]);
+    history.push('/');
   };
 
   return (
-    <>
-      <VinylForm handleOnSubmit={handleOnSubmit}></VinylForm>
-    </>
+    <React.Fragment>
+      <VinylForm handleOnSubmit={handleOnSubmit} />
+    </React.Fragment>
   );
-}
+};
+
+export default AddVinyl;

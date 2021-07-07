@@ -4,9 +4,12 @@ import Header from '../components/Header';
 import AddVinyl from '../components/AddVinyl';
 import VinylsList from '../components/VinylsList';
 import Deck from '../components/Deck';
+import { v4 as uuidv4 } from 'uuid';
+import useLocalStorage from '../hooks/useLocalStorage';
+
 
 export default function AppRouter() {
-  const [appState, setAppState] = useState();
+  const [vinyls, setVinyls] = useLocalStorage('vinyls', []);
   useEffect(() => {
      async function FetchData() {
       const res = await fetch("https://api.discogs.com/users/.Apres/collection", {
@@ -17,20 +20,21 @@ export default function AppRouter() {
       let vinylsArray = [];
       vinyls.forEach(vinyl => {
         vinyl = {
+          id: uuidv4(),
           title: vinyl.basic_information.title,
           artist: vinyl.basic_information.artists_sort,
           year: vinyl.basic_information.year,
           genre: vinyl.basic_information.genres[0],
           label: vinyl.basic_information.labels[0].name,
           cover: vinyl.basic_information.huge_thumb,
+          date: new Date(),
         };
         vinylsArray.push(vinyl);
       });
-      setAppState(vinylsArray);
+      setVinyls(vinylsArray);
     };
     FetchData();
     }, []);
-  console.log(appState);
   return (
     <BrowserRouter>
       <div>
@@ -38,11 +42,13 @@ export default function AppRouter() {
         <div className="main-content">
           <Switch>
             <Route render={(props) => (
-              <VinylsList {...props} vinyls={appState} setVinyls={setAppState} /> )} path="/list" exact={true}
+              <VinylsList {...props} vinyls={vinyls} setVinyls={setVinyls} /> )} path="/list"
             />
-            <Route component={AddVinyl} path="/add" />
             <Route render={(props) => (
-              <Deck {...props} vinyls={appState} setVinyls={setAppState} /> )} path="/" exact={true}
+              <AddVinyl {...props} vinyls={vinyls} setVinyls={setVinyls} /> )} path="/add"
+            />
+            <Route render={(props) => (
+              <Deck {...props} vinyls={vinyls} setVinyls={setVinyls} /> )} path="/" exact={true}
             />
           </Switch>
         </div>
