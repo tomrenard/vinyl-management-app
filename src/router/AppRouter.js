@@ -41,15 +41,15 @@ export default function AppRouter() {
         <Header />
         <div className="main-content">
           <Switch>
-            <Route render={(props) => (
-              <VinylsList {...props} vinyls={vinyls} setVinyls={setVinyls} /> )} path="/list"
-            />
-            <Route render={(props) => (
-              <AddVinyl {...props} vinyls={vinyls} setVinyls={setVinyls} /> )} path="/add"
-            />
-            <Route render={(props) => (
-              <Deck {...props} vinyls={vinyls} setVinyls={setVinyls} /> )} path="/" exact={true}
-            />
+              <Route render={(props) => (
+                <VinylsList {...props} vinyls={vinyls} setVinyls={setVinyls} /> )} path="/list"
+              />
+              <Route render={(props) => (
+                <AddVinyl {...props} vinyls={vinyls} setVinyls={setVinyls} /> )} path="/add"
+              />
+              <Route render={(props) => (
+                <Deck {...props} vinyls={vinyls} setVinyls={setVinyls} /> )} path="/" exact={true}
+              />
           </Switch>
         </div>
       </div>

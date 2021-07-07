@@ -3,7 +3,7 @@ import VinylForm from './VinylForm';
 
 const AddVinyl = ({ history, vinyls, setVinyls }) => {
   const handleOnSubmit = (vinyl) => {
-    setVinyls([vinyl, ...vinyls]);
+    setVinyls([...vinyls, vinyl]);
     history.push('/');
   };
 

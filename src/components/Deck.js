@@ -11,18 +11,20 @@ const from = i => ({ x: 0, rot: 0, scale: 1.5, y: -1000 })
 const trans = (r, s) => `perspective(1500px) rotateX(30deg) rotateY(${r / 10}deg) rotateZ(${r}deg) scale(${s})`
 
 export default function Deck({ vinyls }) {
+  const [clicked, setClicked] = useState(false);
+  const [vinylFiltered, setVinylFiltered] = useState([]);
   let img_url = [];
   function FetchImg() { vinyls && vinyls.forEach(vinyl => (
     img_url.push(vinyl.cover)
   ))}
   FetchImg();
   function handleClick(e) {
-    const vinylFiltered = vinyls.filter(function (vinyl) {
-      const targeted = e.target.style.backgroundImage;
-      const covered = `url("${vinyl.cover}")`;
-      return covered === targeted ? vinyl.title : '';
-    });
-    console.log(vinylFiltered);
+    setClicked(true);
+    setVinylFiltered(vinyls.filter(vinyl => {
+    const targeted = e.target.style.backgroundImage;
+    const covered = `url("${vinyl.cover}")`;
+    return covered === targeted;
+  }));
   }
   const [gone] = useState(() => new Set()) // The set flags all the cards that are flicked out
   const [props, set] = useSprings(img_url.length, i => ({ ...to(i), from: from(i) })) // Create a bunch of springs using the helpers above
@@ -46,10 +48,12 @@ export default function Deck({ vinyls }) {
     <h2>Loading</h2>)
   }
   else { return props.map(({ x, y, rot, scale }, i) => (
-    <animated.div className="parentCard" key={i} style={{ transform: interpolate([x, y], (x, y) => `translate3d(${x}px,${y}px,0)`) }}>
-      {/* This is the card itself, we're binding our gesture to it (and inject its index so we know which is which) */}
-      <animated.div onClick={handleClick} className="childCard" {...bind(i)} style={{ transform: interpolate([rot, scale], trans), backgroundImage: `url("${img_url[i]}")` }} />
-    </animated.div>
+    <>
+      <animated.div className="parentCard" key={i} style={{ transform: interpolate([x, y], (x, y) => `translate3d(${x}px,${y}px,0)`) }}>
+        {/* This is the card itself, we're binding our gesture to it (and inject its index so we know which is which) */}
+        <animated.div onClick={handleClick} className="childCard" {...bind(i)} style={{ transform: interpolate([rot, scale], trans), backgroundImage: `url("${img_url[i]}")` }} />
+      </animated.div>
+    </>
   ))
   }
 }
