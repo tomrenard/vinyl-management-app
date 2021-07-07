@@ -20,12 +20,10 @@ export default function Deck({ vinyls }) {
   FetchImg();
   function handleClick(e) {
     setClicked(true);
-    setVinylFiltered(vinyls.filter(vinyl => {
     const targeted = e.target.style.backgroundImage;
-    const covered = `url("${vinyl.cover}")`;
-    return covered === targeted;
-  }));
-  }
+    setVinylFiltered(vinyls.filter((vinyl) => `url("${vinyl.cover}")` === targeted));
+    console.log(vinylFiltered);
+  };
   const [gone] = useState(() => new Set()) // The set flags all the cards that are flicked out
   const [props, set] = useSprings(img_url.length, i => ({ ...to(i), from: from(i) })) // Create a bunch of springs using the helpers above
   // Create a gesture, we're interested in down-state, delta (current-pos - click-pos), direction and velocity
@@ -48,12 +46,12 @@ export default function Deck({ vinyls }) {
     <h2>Loading</h2>)
   }
   else { return props.map(({ x, y, rot, scale }, i) => (
-    <>
       <animated.div className="parentCard" key={i} style={{ transform: interpolate([x, y], (x, y) => `translate3d(${x}px,${y}px,0)`) }}>
         {/* This is the card itself, we're binding our gesture to it (and inject its index so we know which is which) */}
-        <animated.div onClick={handleClick} className="childCard" {...bind(i)} style={{ transform: interpolate([rot, scale], trans), backgroundImage: `url("${img_url[i]}")` }} />
+        <animated.div onClick={handleClick} className="childCard" {...bind(i)} style={{ transform: interpolate([rot, scale], trans), backgroundImage: `url("${img_url[i]}")` }}>
+          <h2>{vinylFiltered.title}</h2>
+        </animated.div>
       </animated.div>
-    </>
   ))
   }
 }

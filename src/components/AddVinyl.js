@@ -8,9 +8,9 @@ const AddVinyl = ({ history, vinyls, setVinyls, vinylsDiscogs, setVinylsDiscogs 
   };
 
   return (
-    <React.Fragment>
+    <div className="form-container">
       <VinylForm handleOnSubmit={handleOnSubmit} />
-    </React.Fragment>
+    </div>
   );
 };
 

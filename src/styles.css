@@ -10,29 +10,54 @@ body {
   height: 100%;
   width: 100%;
   user-select: none;
-  font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica neue, helvetica, ubuntu, roboto, noto, segoe ui, arial,
-    sans-serif;
+  font-family: 'Poppins', sans-serif;
   position: fixed;
   overflow: hidden;
 }
 
-#root {
-  background: lightblue;
+.flex-container {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
   position: fixed;
+}
+
+.form-container {
+  margin-left: 14em;
+  width: 100%;
+}
+
+.header-container {
+  margin-left: 3em;
+  max-width: 450px;
+}
+
+.header-container h1 {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 100;
+  text-transform: uppercase;
+  font-size: 5em;
+}
+
+.deck-container {
+  position: fixed;
+  top: 22%;
+  right: 48%;
+}
+
+#root {
+  background: #f7f5f4;
   overflow: hidden;
   width: 100%;
   height: 100%;
-  cursor: pointer;
 }
 
 .parentCard {
   position: absolute;
-  width: 100vw;
-  height: 100vh;
+  width: 30em;
+  height: 30em;
   will-change: transform;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .childCard {
@@ -41,10 +66,9 @@ body {
   background-size: auto 100%;
   background-repeat: no-repeat;
   background-position: center center;
-  width: 60vh;
-  height: 60vh;
-  max-width: 500px;
-  max-height: 500px;
+  width: 30em;
+  height: 30em;
   will-change: transform;
   box-shadow: 0 12.5px 20px -6px rgba(50, 50, 73, 0.4), 0 10px 10px -2px rgba(50, 50, 73, 0.3);
+  cursor: pointer;
 }

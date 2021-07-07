@@ -39,16 +39,18 @@ export default function AppRouter() {
     }}, []);
   return (
     <BrowserRouter>
-      <div>
+      <div className="flex-container">
         <Header />
         <div className="main-content">
           <Switch>
               <Route render={(props) => (
                 <AddVinyl {...props} vinyls={vinyls} setVinyls={setVinyls} vinylsDiscogs={vinylsDiscogs} setVinylsDiscogs={setVinylsDiscogs} /> )} path="/add"
               />
+              <div className="deck-container">
               <Route render={(props) => (
                 <Deck {...props} vinyls={vinyls} setVinyls={setVinyls} /> )} path="/" exact={true}
               />
+              </div>
           </Switch>
         </div>
       </div>
