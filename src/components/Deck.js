@@ -18,14 +18,14 @@ const from = i => ({ x: 0, rot: 0, scale: 1.5, y: -1000 })
 // This is being used down there in the view, it interpolates rotation and scale into a css transform
 const trans = (r, s) => `perspective(1500px) rotateX(30deg) rotateY(${r / 10}deg) rotateZ(${r}deg) scale(${s})`
 
-export default function Deck({ vinyls, isBusy }) {
+export default function Deck({ vinyls }) {
   let img_url = [];
   const [isReady, setIsReady] = useState(false);
-  const [data, setData] = useState(vinyls);
-  function FetchImg() { vinyls && vinyls.vinyls.forEach(vinyl => (
-    img_url.push(vinyl.basic_information.huge_thumb)
-  ))}
-  FetchImg();
+  const [data, setData] = useState();
+  // function FetchImg() { vinyls && vinyls.vinyls.forEach(vinyl => (
+  //   img_url.push(vinyl.basic_information.huge_thumb)
+  // ))}
+  // FetchImg();
   const [gone] = useState(() => new Set()) // The set flags all the cards that are flicked out
   const [props, set] = useSprings(img_url.length, i => ({ ...to(i), from: from(i) })) // Create a bunch of springs using the helpers above
   // Create a gesture, we're interested in down-state, delta (current-pos - click-pos), direction and velocity
@@ -44,7 +44,7 @@ export default function Deck({ vinyls, isBusy }) {
     if (!down && gone.size === img_url.length) setTimeout(() => gone.clear() || set(i => to(i)), 600)
   })
   // Now we're just mapping the animated values to our view, that's it. Btw, this component only renders once. :-)
-  if (img_url.length != 50) { return (
+  if (img_url.length <= 50) { return (
     <h2>Loading</h2>)
   }
   else { return props.map(({ x, y, rot, scale }, i) => (
