@@ -12,6 +12,7 @@ export default function AppRouter() {
   const [vinyls, setVinyls] = useLocalStorage('vinyls', []);
   const [vinylsDiscogs, setVinylsDiscogs] = useLocalStorage('vinyls', []);
   useEffect(() => {
+    if (vinyls.length < 10) {
      async function FetchData() {
       const res = await fetch("https://api.discogs.com/users/.Apres/collection", {
         headers: { "Authorization": "Discogs token=sAhKoWnryWGckfYwFIoercYLLrOJHKWBmQUqxhFZ" }
@@ -35,7 +36,7 @@ export default function AppRouter() {
       setVinylsDiscogs(vinylsArray);
     };
     FetchData();
-    }, []);
+    }}, []);
   return (
     <BrowserRouter>
       <div>
