@@ -3,21 +3,13 @@ import { Form, Button } from 'react-bootstrap';
 import { v4 as uuidv4 } from 'uuid';
 
 export default function VinyForm(props) {
-  const [vinyl, setVinyl] = useState({
-    title: props.vinyl ? props.vinyl.title : '',
-    artist: props.vinyl ? props.vinyl.artist : '',
-    genre: props.vinyl ? props.vinyl.genre : '',
-    released: props.vinyl ? props.vinyl.released : '',
-    label: props.vinyl ? props.vinyl.label : '',
-  });
-
+  const [vinyl, setVinyl] = useState([]);
   const [errorMsg, setErrorMsg] = useState('');
-  const { title, artist, genre, released, label } = vinyl;
+  const { title, artist, year, genre, label, cover } = vinyl;
 
   const handleOnSubmit = (event) => {
     event.preventDefault();
-    const values = [title, artist, genre, released, label];
-    let errorMsg = '';
+    const values = [title, artist, year, genre, label, cover];
 
     const allFieldsFilled = values.every((field) => {
       const value = `${field}`.trim();
@@ -29,9 +21,10 @@ export default function VinyForm(props) {
         id: uuidv4(),
         title,
         artist,
+        year,
         genre,
-        released,
         label,
+        cover,
         date: new Date()
       };
       props.handleOnSubmit(vinyl);
@@ -75,6 +68,17 @@ export default function VinyForm(props) {
             onChange={handleInputChange}
           />
         </Form.Group>
+         <Form.Group controlId="date">
+          <Form.Label>Vinyl Release Date</Form.Label>
+          <Form.Control
+            className="input-control"
+            type="text"
+            name="year"
+            value={year}
+            placeholder="Enter Release Year"
+            onChange={handleInputChange}
+          />
+        </Form.Group>
         <Form.Group controlId="genre">
           <Form.Label>Genre</Form.Label>
           <Form.Control
@@ -86,14 +90,25 @@ export default function VinyForm(props) {
             onChange={handleInputChange}
           />
         </Form.Group>
-        <Form.Group controlId="date">
-          <Form.Label>Vinyl Release Date</Form.Label>
+        <Form.Group controlId="label">
+          <Form.Label>Genre</Form.Label>
           <Form.Control
             className="input-control"
             type="text"
-            name="released"
-            value={released}
-            placeholder="Enter Release Date"
+            name="label"
+            value={label}
+            placeholder="Enter label"
+            onChange={handleInputChange}
+          />
+        </Form.Group>
+        <Form.Group controlId="genre">
+          <Form.Label>Cover</Form.Label>
+          <Form.Control
+            className="input-control"
+            type="file"
+            name="cover"
+            value={cover}
+            placeholder="Add Cover"
             onChange={handleInputChange}
           />
         </Form.Group>
