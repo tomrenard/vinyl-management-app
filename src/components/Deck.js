@@ -28,8 +28,8 @@ export default function Deck({ vinyls, handleRemoveVinyl }) {
       return { x, rot, scale, delay: undefined, config: { friction: 50, tension: down ? 800 : isGone ? 200 : 500 } }
     })
     if (!down && gone.size === vinyls.length) setTimeout(() => gone.clear() || set(i => to(i)), 600)
+    console.log(down);
   })
-
   if (vinyls.length <= 10) { return (
     <h2>Loading</h2>)
   }
@@ -43,7 +43,7 @@ export default function Deck({ vinyls, handleRemoveVinyl }) {
           :
           ''
         }
-        <h2 onClick={() => handleRemoveVinyl(vinyls[i].id)}>Delete</h2>
+        <h2 onClick={() => { handleRemoveVinyl(vinyls[i].id); setTimeout(() => gone.clear() || set(i => to(0)), 0);}}>Delete</h2>
         </animated.div>
       </animated.div>
   ))
