@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
-import { useSpring, animated, config } from 'react-spring'
+import { useSpring, animated, config } from 'react-spring';
 
 const HeaderStyles = styled.header`
   width: 100%;
