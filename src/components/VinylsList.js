@@ -3,7 +3,7 @@ import Deck from './Deck';
 import styled from 'styled-components';
 
 const SectionVinylListStyles = styled.section`
-  margin-top: 9em;
+  margin-top: 7em;
   padding: 0px 40px;
   text-align: center;
   display: flex;

@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { useSprings, animated, interpolate } from 'react-spring'
 import { useDrag } from 'react-use-gesture'
 import '../styles.css';
+import { VscClose } from 'react-icons/vsc';
+import { VscInfo } from 'react-icons/vsc';
 
 
 const to = i => ({ x: 0, y: i * -2, scale: 1, rot: -10 + Math.random() * 20, delay: i * 100 })
@@ -37,13 +39,21 @@ export default function Deck({ vinyls, handleRemoveVinyl }) {
       <animated.div className="parentCard" key={i} style={{ transform: interpolate([x, y], (x, y) => `translate3d(${x}px,${y}px,0)`) }}>
         <animated.div
            className="childCard" {...bind(i)} style={{ transform: interpolate([rot, scale], trans), backgroundImage: `url("${vinyls[i].cover}")` }}>
-        <h2 onClick={handleClick}>See info</h2>
-        {clicked ?
-          <p>{vinyls[i].label}</p>
+          {clicked ?
+          <p style={{color: '#01FF70'}} className="info_button" onClick={handleClick}><VscInfo /></p>
           :
-          ''
-        }
-        <h2 onClick={() => { handleRemoveVinyl(vinyls[i].id); setTimeout(() => gone.clear() || set(i => to(0)), 0);}}>Delete</h2>
+          <p className="info_button" onClick={handleClick}><VscInfo /></p>
+          }
+          {clicked ?
+            <ul className="vinyl_info">
+              <li>{vinyls[i].title} - {vinyls[i].artist} ({vinyls[i].year})</li>
+              <li>Label: {vinyls[i].label}</li>
+              <li>Genre: {vinyls[i].genre}</li>
+            </ul>
+            :
+            ''
+          }
+          <p className="delete_button" onClick={() => { handleRemoveVinyl(vinyls[i].id); setTimeout(() => gone.clear() || set(i => to(0)), 0);}}><VscClose/></p>
         </animated.div>
       </animated.div>
   ))

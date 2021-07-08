@@ -4,7 +4,6 @@ import styled from 'styled-components';
 
 const HeaderStyles = styled.header`
   width: 100%;
-  max-width: 1200px;
   padding: 1em 40px;
   .links {
     display: flex;
