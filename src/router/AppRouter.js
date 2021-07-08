@@ -11,7 +11,7 @@ import useLocalStorage from '../hooks/useLocalStorage';
 export default function AppRouter() {
   const [vinyls, setVinyls] = useLocalStorage('vinyls', []);
   const handleRemoveVinyl = (id) => {
-    setVinyls(vinyls.filter((vinyl) => vinyl.id != id));
+    setVinyls(vinyls.filter((vinyl) => vinyl.id !== id));
     console.log(vinyls);
   };
   useEffect(() => {
