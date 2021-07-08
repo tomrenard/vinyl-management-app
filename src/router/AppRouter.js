@@ -4,14 +4,16 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import AddVinyl from '../components/AddVinyl';
 import VinylsList from '../components/VinylsList';
-import Deck from '../components/Deck';
 import { v4 as uuidv4 } from 'uuid';
 import useLocalStorage from '../hooks/useLocalStorage';
 
 
 export default function AppRouter() {
   const [vinyls, setVinyls] = useLocalStorage('vinyls', []);
-  const [vinylsDiscogs, setVinylsDiscogs] = useLocalStorage('vinyls', []);
+  const handleRemoveVinyl = (id) => {
+    setVinyls(vinyls.filter((vinyl) => vinyl.id != id));
+    console.log(vinyls);
+  };
   useEffect(() => {
     if (vinyls.length < 10) {
      async function FetchData() {
@@ -19,9 +21,9 @@ export default function AppRouter() {
         headers: { "Authorization": "Discogs token=sAhKoWnryWGckfYwFIoercYLLrOJHKWBmQUqxhFZ" }
       });
       const data = await res.json();
-      const vinylsDiscogs = data.releases;
+      const vinyls = data.releases;
       let vinylsArray = [];
-      vinylsDiscogs.forEach(vinyl => {
+      vinyls.forEach(vinyl => {
         vinyl = {
           id: uuidv4(),
           title: vinyl.basic_information.title,
@@ -34,7 +36,7 @@ export default function AppRouter() {
         };
         vinylsArray.push(vinyl);
       });
-      setVinylsDiscogs(vinylsArray);
+      setVinyls(vinylsArray);
     };
     FetchData();
     }}, []);
@@ -44,10 +46,10 @@ export default function AppRouter() {
           <div className="main-content">
             <Switch>
                 <Route render={(props) => (
-                  <AddVinyl {...props} vinyls={vinyls} setVinyls={setVinyls} vinylsDiscogs={vinylsDiscogs} setVinylsDiscogs={setVinylsDiscogs} /> )} path="/add"
+                  <AddVinyl {...props} vinyls={vinyls} setVinyls={setVinyls} /> )} path="/add"
                 />
                 <Route render={(props) => (
-                  <VinylsList {...props} vinyls={vinyls} setVinyls={setVinyls} /> )} path="/" exact={true}
+                  <VinylsList {...props} vinyls={vinyls} handleRemoveVinyl={handleRemoveVinyl} setVinyls={setVinyls} /> )} path="/" exact={true}
                 />
             </Switch>
           </div>

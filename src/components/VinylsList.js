@@ -12,10 +12,10 @@ const SectionVinylListStyles = styled.section`
   height: 100%;
 `;
 
-export default function VinylsList({ vinyls }) {
+export default function VinylsList({ vinyls, handleRemoveVinyl }) {
   return (
     <SectionVinylListStyles>
-      <Deck vinyls={vinyls} />
+      <Deck handleRemoveVinyl={handleRemoveVinyl} vinyls={vinyls} />
     </SectionVinylListStyles>
   );
 };
