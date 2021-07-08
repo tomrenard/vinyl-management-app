@@ -10,7 +10,7 @@ const FooterStyles = styled.div`
 export default function Footer() {
   return(
     <FooterStyles>
-      <p style={{ position: 'fixed', bottom: '0', fontWeight: '100', fontSize: '0.8em', marginTop: '1em' }}className='center'>&copy; Tom Renard {new Date().getFullYear()}</p>
+      <p style={{ position: 'fixed', bottom: '0', fontWeight: '100', fontSize: '0.7em', marginTop: '1em' }}className='center'>&copy; Tom Renard {new Date().getFullYear()}</p>
     </FooterStyles>
   );
 }
