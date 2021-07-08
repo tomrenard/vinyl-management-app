@@ -33,7 +33,7 @@ export default function Header() {
   })
   return (
     <HeaderStyles>
-        <animated.h1 style={{...props, textAlign: 'center'}}>Vinyl Personal Library</animated.h1>
+        <animated.h1 style={{...props, textAlign: 'center'}}>Vinyls Personal Library</animated.h1>
         <div className="links">
           <NavLink to="/" className="link" activeClassName="active" exact>
             <button>Vinyls List</button>
