@@ -27,7 +27,7 @@ export default function Header() {
     from: { opacity: 0 },
     reset: true,
     reverse: flip,
-    delay: 200,
+    delay: 250,
     config: config.molasses,
     onRest: () => set(!flip),
   })
