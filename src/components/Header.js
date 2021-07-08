@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
+import { useSpring, animated, config } from 'react-spring'
 
 const HeaderStyles = styled.header`
   width: 100%;
@@ -9,7 +10,7 @@ const HeaderStyles = styled.header`
     display: flex;
     justify-content: center;
     .link {
-      padding: 0 1em;
+      padding: 1em 1em;
       text-decoration: none;
       color: inherit;
       &:hover {
@@ -20,15 +21,25 @@ const HeaderStyles = styled.header`
 `;
 
 export default function Header() {
+  const [flip, set] = useState(false)
+  const props = useSpring({
+    to: { opacity: 1 },
+    from: { opacity: 0 },
+    reset: true,
+    reverse: flip,
+    delay: 200,
+    config: config.molasses,
+    onRest: () => set(!flip),
+  })
   return (
     <HeaderStyles>
-        <h1 className="neon-text" style={{ textAlign: 'center' }}>Vinyls Personal Library</h1>
+        <animated.h1 style={{...props, textAlign: 'center'}}>Vinyl Personal Library</animated.h1>
         <div className="links">
           <NavLink to="/" className="link" activeClassName="active" exact>
-            Vinyls List
+            <button>Vinyls List</button>
           </NavLink>
           <NavLink to="/add" className="link" activeClassName="active">
-            Add Vinyl
+            <button>Add a vinyl</button>
           </NavLink>
         </div>
     </HeaderStyles>

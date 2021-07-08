@@ -3,7 +3,6 @@ import VinylForm from './VinylForm';
 import styled from 'styled-components';
 
 const SectionAddVinylStyles = styled.section`
-  margin-top: 5em;
   padding: 0px 40px;
   text-align: center;
   display: flex;

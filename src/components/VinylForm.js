@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form, Button } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
 import { v4 as uuidv4 } from 'uuid';
 
 
@@ -56,7 +56,7 @@ export default function VinyForm(props) {
       {errorMsg && <p className="errorMsg">{errorMsg}</p>}
       <Form onSubmit={handleOnSubmit}>
         <Form.Group controlId="title">
-          <Form.Label>Vinyl Title</Form.Label>
+          <Form.Label></Form.Label>
           <Form.Control
             className="input-control"
             type="text"
@@ -67,7 +67,7 @@ export default function VinyForm(props) {
           />
         </Form.Group>
         <Form.Group controlId="artist">
-          <Form.Label>Vinyl Artist</Form.Label>
+          <Form.Label></Form.Label>
           <Form.Control
             className="input-control"
             type="text"
@@ -78,7 +78,7 @@ export default function VinyForm(props) {
           />
         </Form.Group>
          <Form.Group controlId="date">
-          <Form.Label>Vinyl Release Date</Form.Label>
+          <Form.Label></Form.Label>
           <Form.Control
             className="input-control"
             type="text"
@@ -89,7 +89,7 @@ export default function VinyForm(props) {
           />
         </Form.Group>
         <Form.Group controlId="genre">
-          <Form.Label>Genre</Form.Label>
+          <Form.Label></Form.Label>
           <Form.Control
             className="input-control"
             type="text"
@@ -100,7 +100,7 @@ export default function VinyForm(props) {
           />
         </Form.Group>
         <Form.Group controlId="label">
-          <Form.Label>Genre</Form.Label>
+          <Form.Label></Form.Label>
           <Form.Control
             className="input-control"
             type="text"
@@ -111,19 +111,19 @@ export default function VinyForm(props) {
           />
         </Form.Group>
         <Form.Group controlId="cover">
-          <Form.Label>Cover</Form.Label>
+          <Form.Label></Form.Label>
           <Form.Control
             className="input-control"
             type="text"
             name="cover"
             value={cover}
-            placeholder="Upload Cover Link (find on Discogs)"
+            placeholder="Enter Cover link"
             onChange={handleInputChange}
           />
         </Form.Group>
-        <Button variant="primary" type="submit" className="submit-btn">
+        <button style={{ width: '100%'}} type="submit">
           Submit
-        </Button>
+        </button>
       </Form>
     </div>
   );
