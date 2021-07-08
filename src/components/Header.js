@@ -22,7 +22,7 @@ const HeaderStyles = styled.header`
 export default function Header() {
   return (
     <HeaderStyles>
-        <h1 style={{ textAlign: 'center' }}>Vinyls Personal Library</h1>
+        <h1 className="neon-text" style={{ textAlign: 'center' }}>Vinyls Personal Library</h1>
         <div className="links">
           <NavLink to="/" className="link" activeClassName="active" exact>
             Vinyls List
