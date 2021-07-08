@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Header from '../components/Header';
+import Footer from '../components/Footer';
 import AddVinyl from '../components/AddVinyl';
 import VinylsList from '../components/VinylsList';
 import Deck from '../components/Deck';
@@ -39,21 +40,18 @@ export default function AppRouter() {
     }}, []);
   return (
     <BrowserRouter>
-      <div className="flex-container">
         <Header />
-        <div className="main-content">
-          <Switch>
-              <Route render={(props) => (
-                <AddVinyl {...props} vinyls={vinyls} setVinyls={setVinyls} vinylsDiscogs={vinylsDiscogs} setVinylsDiscogs={setVinylsDiscogs} /> )} path="/add"
-              />
-              <div className="deck-container">
-              <Route render={(props) => (
-                <Deck {...props} vinyls={vinyls} setVinyls={setVinyls} /> )} path="/" exact={true}
-              />
-              </div>
-          </Switch>
-        </div>
-      </div>
+          <div className="main-content">
+            <Switch>
+                <Route render={(props) => (
+                  <AddVinyl {...props} vinyls={vinyls} setVinyls={setVinyls} vinylsDiscogs={vinylsDiscogs} setVinylsDiscogs={setVinylsDiscogs} /> )} path="/add"
+                />
+                <Route render={(props) => (
+                  <VinylsList {...props} vinyls={vinyls} setVinyls={setVinyls} /> )} path="/" exact={true}
+                />
+            </Switch>
+          </div>
+         <Footer />
     </BrowserRouter>
   );
 };
