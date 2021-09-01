@@ -33,15 +33,15 @@ export default function Header() {
   })
   return (
     <HeaderStyles>
-        <animated.h1 style={{...props, textAlign: 'center'}}>Vinyls Personal Library</animated.h1>
-        <div className="links">
-          <NavLink to="/" className="link" activeClassName="active" exact>
-            <button>Vinyls List</button>
-          </NavLink>
-          <NavLink to="/add" className="link" activeClassName="active">
-            <button>Add a vinyl</button>
-          </NavLink>
-        </div>
+      <animated.h1 style={{ ...props, textAlign: 'center' }}>Vinyls Personal Library</animated.h1>
+      <div className="links">
+        <NavLink to="/" className="link" activeClassName="active" exact>
+          <button>Vinyls List</button>
+        </NavLink>
+        <NavLink to="/add" className="link" activeClassName="active">
+          <button>Add a vinyl</button>
+        </NavLink>
+      </div>
     </HeaderStyles>
   );
 };
